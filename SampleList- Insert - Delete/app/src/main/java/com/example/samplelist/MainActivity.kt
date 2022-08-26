@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         dataBind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(dataBind.root)
 
+        
         criaRecycler()
 
         dataBind.addItem.setOnClickListener(){
