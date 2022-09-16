@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.samplelist.databinding.ItemCellBinding
 import com.example.samplelist.model.ItemObject
 
-class ListeItemAdapter : RecyclerView.Adapter<ListeItemAdapter.ItemHolder>() {
+class ListeItemAdapter(val delegate: ICrudItem) : RecyclerView.Adapter<ListeItemAdapter.ItemHolder>() {
 
     private val items: MutableList<ItemObject> = mutableListOf()
 
@@ -24,29 +24,37 @@ class ListeItemAdapter : RecyclerView.Adapter<ListeItemAdapter.ItemHolder>() {
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.bind(items[position])
-        holder.itemCell.removeItemBtn.setOnClickListener(){
+        holder.itemCell.removeItemBtn.setOnClickListener() {
             removeListItem(items[position])
+        }
+        holder.itemCell.editItemBtn.setOnClickListener {
+            delegate.EditItem(items[position], position)
         }
     }
 
     override fun getItemCount(): Int =
         items.size
 
-    fun setItensList(listItems: List<ItemObject>){
+    fun setItensList(listItems: List<ItemObject>) {
         items.clear()
         items.addAll(listItems)
         notifyDataSetChanged()
     }
 
-    fun AddListItem(item:ItemObject){
+    fun AddListItem(item: ItemObject) {
         items.add(item)
         notifyItemInserted(items.size)
     }
 
-    fun removeListItem(item:ItemObject){
+    fun removeListItem(item: ItemObject) {
         val removeIndex = items.indexOf(item)
         items.remove(item)
         notifyItemRemoved(removeIndex)
         notifyItemRangeChanged(removeIndex, items.size)
+    }
+
+    fun editListItem(item: ItemObject, index: Int) {
+        items[index] = item
+        notifyItemChanged(index)
     }
 }

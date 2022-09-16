@@ -1,15 +1,18 @@
 package com.example.samplelist
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.samplelist.Constants.INDEX_EXTRA
+import com.example.samplelist.Constants.ITEM_EXTRA
 import com.example.samplelist.databinding.ActivityMainBinding
 import com.example.samplelist.model.ItemObject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ICrudItem {
     lateinit var dataBind: ActivityMainBinding
-    val listeItemAdapter = ListeItemAdapter()
+    val listeItemAdapter = ListeItemAdapter(this)
     var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,5 +44,20 @@ class MainActivity : AppCompatActivity() {
 
         dataBind.lista.adapter = listeItemAdapter
 
+    }
+
+    override fun AddItem(item: ItemObject) {
+        TODO("Not yet implemented")
+    }
+
+    override fun ExcludeItem(item: ItemObject) {
+        TODO("Not yet implemented")
+    }
+
+    override fun EditItem(item: ItemObject, index: Int) {
+        val intent = Intent(this, EditItemActivity::class.java)
+        intent.putExtra(ITEM_EXTRA, item)
+        intent.putExtra(INDEX_EXTRA, index)
+        startActivity(intent)
     }
 }
