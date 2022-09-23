@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ItemObject(val textoItem: String, val detailItem: String) : Parcelable
+data class ItemObject(val textoItem: String, val detailItem: String, var isVisible: Boolean = false) : Parcelable
